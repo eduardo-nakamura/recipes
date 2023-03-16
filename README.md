@@ -2,6 +2,12 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+spoonacular API
+framer-motion 
+react-icons 
+react-router-dom 
+styled-components
+react-splide 
 ## Available Scripts
 
 In the project directory, you can run:

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import '@splidejs/react-splide/css';
-
+import { Link } from "react-router-dom";
 function Veggie() {
   const [veggie, setVeggie] = useState([])
 
@@ -13,10 +13,12 @@ function Veggie() {
   // Get Random Recipes
   const getVeggie = async () => {
     const check = localStorage.getItem('veggie');
+    const api = localStorage.getItem('apiKey');
     if (check) {
       setVeggie(JSON.parse(check));
     } else {
-      const api = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${process.env.REACT_APP_API_KEY}&number=10&tags=vegetarian`)
+      const api = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${api}&number=10&tags=vegetarian`)
+      // const api = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${process.env.REACT_APP_API_KEY}&number=10&tags=vegetarian`)
       const data = await api.json();
       setVeggie(data.recipes)
       localStorage.setItem('veggie', JSON.stringify(data.recipes))
@@ -34,14 +36,22 @@ function Veggie() {
           pagination: false,
           arrows: false,
           drag:'free',
-          gap: '2rem'
+          gap: '2rem',
+          breakpoints: {
+            640: {
+              perPage: 2,
+            },
+          }
         }}>
           {veggie.map((recipe) => {
             return (
               <SplideSlide key={recipe.id}>
                 <Card>
+                  <Link to={`/recipe/${recipe.id}`}>
                   <p>{recipe.title}</p>
                   <img src={recipe.image} alt={recipe.title} />
+                  </Link>
+                  
                 </Card>
               </SplideSlide>
 
@@ -77,9 +87,9 @@ const Card = styled.div`
     bottom: 0%;
     transform: translate(-50%,0%);
     color: white;
-    width: 100%;
+    width: 101%;
     text-align: center;
-    font-weigth:600;
+    
     font-size:1rem;
     height: 40%;
     display:flex;

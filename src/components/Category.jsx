@@ -37,22 +37,29 @@ const SLink = styled(NavLink)`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border-radius: 50%;
-    margin-right: 2rem;
+    border-radius: 15px;
+    margin-right: 1rem;
     text-decoration:none;
     cursor: pointer;
-    transform: scale(1);
+    transform: scale(0.9);
+    background:black;    
+    height:4.2rem;
+    width:4.2rem;
+    transition: all 0.5s ease-out;
 
     h4{
-        color: ##bfbfbf;
-        font-size: 1.1rem;
+        color: #bfbfbf;
+        font-size: 0.7rem;
+        margin:5px 0 0;
     }
 
     svg{
-        color: ##bfbfbf;
+        color: #bfbfbf;
         font-size: 1.3rem;
     }
-
+    &:hover{
+        transform: scale(1);
+    }
     &.active{
         svg{
             color: #00838F;

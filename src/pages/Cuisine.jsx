@@ -7,13 +7,14 @@ import { useParams } from 'react-router-dom';
 
 function Cuisine() {
     const [cuisine, setCuisine] = useState([])
+    const api = localStorage.getItem('apiKey');
     let params = useParams();
 
     const getCuisine = async (name) => {
-        console.log(name.type)
-        const data = await fetch(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&number=10&cuisine=${name.type}`)
-        const recipes = await data.json();
-        console.log(recipes)
+     
+        const data = await fetch(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${api}&number=12&cuisine=${name.type}`)
+        // const data = await fetch(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&number=12&cuisine=${name.type}`)
+        const recipes = await data.json();        
         setCuisine(recipes.results)
     }
 
@@ -21,12 +22,15 @@ function Cuisine() {
         getCuisine(params);
     }, [params, params.type])
   return (
-    <Grid>
+    <Grid animate={{opacity: 1}} initial={{opacity: 0}} exit={{opacity: 0}} transition={{duration:0.3}}>
         {cuisine.map((item) => {
             return(
                 <Card key={item.id}>
+                    <Link to={`/recipe/${item.id}`}>
                     <img src={item.image} alt={item.title} />
                     <h4>{item.title}</h4>
+                    </Link>
+                  
                 </Card>
             );
         })}
@@ -34,11 +38,10 @@ function Cuisine() {
   )
 }
 
-const Grid = styled.div`
+const Grid = styled(motion.div)`
     display:grid;
-
-    grid-template-columns: repeat(auto-fit, minMax(10rem, 1fr));
-    grid-grap: 1rem
+    grid-template-columns: repeat(auto-fit, minMax(200px, 1fr));
+    grid-gap: 10px;
 `
 
 const Card = styled.div`
@@ -52,7 +55,8 @@ const Card = styled.div`
     }
     h4{
         text-align:center;
-        padding: 1rem
+        padding: 5px;
+        font-size: 13px;
     }
 `
 export default Cuisine

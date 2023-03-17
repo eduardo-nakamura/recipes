@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import '@splidejs/react-splide/css';
+import { Link } from "react-router-dom";
 
 function Popular() {
   const [popular, setPopular] = useState([])
@@ -13,10 +14,12 @@ function Popular() {
   // Get Random Recipes
   const getPopular = async () => {
     const check = localStorage.getItem('popular');
+    const apiKey = localStorage.getItem('apiKey');
     if (check) {
       setPopular(JSON.parse(check));
     } else {
-      const api = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${process.env.REACT_APP_API_KEY}&number=10`)
+      const api = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${apiKey}&number=10`)
+      // const api = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${process.env.REACT_APP_API_KEY}&number=10`)
       const data = await api.json();
       setPopular(data.recipes)
       localStorage.setItem('popular', JSON.stringify(data.recipes))
@@ -33,14 +36,22 @@ function Popular() {
           pagination: false,
           arrows: false,
           drag:'free',
-          gap: '2rem'
+          gap: '2rem',
+          breakpoints: {
+            640: {
+              perPage: 2,
+            },
+          }
         }}>
           {popular.map((recipe) => {
             return (
               <SplideSlide key={recipe.id}>
                 <Card>
+                  <Link to={`/recipe/${recipe.id}`}>
                   <p>{recipe.title}</p>
                   <img src={recipe.image} alt={recipe.title} />
+                  </Link>
+            
                 </Card>
               </SplideSlide>
 
@@ -76,9 +87,10 @@ const Card = styled.div`
     bottom: 0%;
     transform: translate(-50%,0%);
     color: white;
-    width: 100%;
+    width: 101%;
     text-align: center;
-    font-weigth:600;
+    padding    : 0;
+    margin: 0;
     font-size:0.8rem;
     height: 40%;
     display:flex;

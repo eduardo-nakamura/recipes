@@ -1,7 +1,6 @@
-import React from 'react'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import styled, { isStyledComponent } from 'styled-components'
+import styled from 'styled-components'
 
 function Recipe() {
   let params = useParams()

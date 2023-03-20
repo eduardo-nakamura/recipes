@@ -15,7 +15,7 @@ function App() {
         <Nav>
           <GiKnifeFork />
           <Logo to={'/'}>Recipes</Logo>
-          <FaQuestionCircle style={{position: 'absolute', right: 0}} />
+          <Link to={'/about'}><FaQuestionCircle style={{position: 'absolute', right: 0}} /></Link>
         </Nav>
         {check !== null && (
           <div>

@@ -5,6 +5,7 @@ import Search from "./components/Search";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { GiKnifeFork } from "react-icons/gi";
+import { FaQuestionCircle } from "react-icons/fa";
 function App() {
   const check = localStorage.getItem('apiKey');
 
@@ -14,6 +15,7 @@ function App() {
         <Nav>
           <GiKnifeFork />
           <Logo to={'/'}>Recipes</Logo>
+          <FaQuestionCircle style={{position: 'absolute', right: 0}} />
         </Nav>
         {check !== null && (
           <div>
@@ -21,11 +23,8 @@ function App() {
             <Category />
           </div>
         )}
-
         <Pages />
       </BrowserRouter>
-
-
     </div>
   );
 }
@@ -41,6 +40,7 @@ const Nav = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  position: relative;
   svg{
     font-size: 2rem;
     color:white;
